@@ -1,11 +1,11 @@
 import Alpine from '@alpinejs/csp'
 
-import counter from './counter'
+import stopwatch from './stopwatch'
+import training from './training'
 
 window.Alpine = Alpine
 
-Alpine.data('counter', counter)
+Alpine.data('stopwatch', stopwatch)
+Alpine.data('training', training)
  
 Alpine.start()
-
-console.log('Alpine initilized!')
