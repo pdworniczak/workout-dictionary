@@ -16,12 +16,14 @@
             <header><p x-text="training.name"></p></header>
             <section>
               <p x-text="currentSet.name"></p>
-              <p x-text="currentSet.repeates"></p>
+              <template x-if="isRepsTraining">
+                <p x-text="currentSet.reps"></p>
+              </template>
             </section>
-
-            <div x-data="stopwatch">
-              <button x-show="displayRunBtn" @click="run">Run</button>
-              <span x-text="time" x-efect="next"></span>
+            <div x-data="stopwatch" x-effect="runStopwatch">
+              <button x-show="displayRunBtn" @click="run">Gotowy</button>
+              <div x-show="displayLabel" x-text="displayLabel"></div>
+              <span x-show="displayTime" x-text="time"></span>
             </div>
           </section>
         </template>
