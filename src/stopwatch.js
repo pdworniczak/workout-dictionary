@@ -69,7 +69,7 @@ export default () => ({
           }
           this.$dispatch(EVENT.STOPWATCH_FINISHED);
         }
-      }, 10);
+      }, 1000);
     };
     timer();
   },
