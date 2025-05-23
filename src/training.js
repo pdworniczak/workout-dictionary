@@ -98,15 +98,29 @@ const STRECHING = {
 };
 
 export const STATUS = {
+  READY: "READY",
   FINISHED: "FINISHED",
   STARTED: "STARTED",
 };
 
 export default () => ({
-  training: STRECHING,
-  status: STATUS.STARTED,
+  training: null,
+  _status: STATUS.READY,
   set: {
     current: 0,
+  },
+  screenLock: null,
+
+  set status(status) {
+    if (this._status === STATUS.STARTED) {
+      navigator.wakeLock
+        .request("screen")
+        .then((value) => (this.screenLock = value));
+    } else if (this._status === STATUS.FINISHED) {
+      console.log("realease screen lock");
+      this.screenLock?.releas();
+    }
+    this._status = status;
   },
 
   get currentSet() {
@@ -121,12 +135,32 @@ export default () => ({
     return this.training.type === TYPE.TIMED;
   },
 
+  get noTraining() {
+    return this.training === null;
+  },
+
+  get trainingSelected() {
+    return this.training !== null && this._status !== STATUS.FINISHED;
+  },
+
+  get ready() {
+    return this.status === STATUS.READY;
+  },
+
   get started() {
-    return this.status === STATUS.STARTED;
+    return this._status === STATUS.STARTED;
   },
 
   get finished() {
-    return this.status === STATUS.FINISHED;
+    return this._status === STATUS.FINISHED;
+  },
+
+  setPushupsTraining() {
+    this.training = PUSHUPS;
+  },
+
+  setStrechingTraining() {
+    this.training = STRECHING;
   },
 
   nextSet() {

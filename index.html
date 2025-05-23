@@ -4,6 +4,7 @@
     <title>Muskul</title>
     <meta charset="UTF-8" />
     <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="stylesheet" href="public/styles.css" />
     <meta name="theme-color" content="#ffffff" />
     <script type="module" src="/src/index.js"></script>
   </head>
@@ -11,7 +12,13 @@
     <header><p>Muskul</p></header>
     <main>
       <article x-data="training" @stopwatch-finished="nextSet">
-        <template x-if="started">
+        <template x-if="noTraining">
+          <section>
+            <button x-on:click="setPushupsTraining">Pushups</button>
+            <button x-on:click="setStrechingTraining">Streching</button>
+          </section>
+        </template>
+        <template x-if="trainingSelected">
           <section>
             <header><p x-text="training.name"></p></header>
             <section>
@@ -26,6 +33,9 @@
               <span x-show="displayTime" x-text="time"></span>
             </div>
           </section>
+        </template>
+        <template x-if="finished">
+          <section>Training finished</section>
         </template>
       </article>
     </main>
